@@ -10,8 +10,11 @@ describe Oystercard do
 
   describe '#top_up' do 
     it 'should add £10 to oystercard balance' do
-      expect { subject.top_up }.to change { subject.balance }.by(10)
+      amount = 10
+      expect { subject.top_up(amount) }.to change { subject.balance }.by(amount)
     end
+
+
   end
 
 end
