@@ -5,8 +5,13 @@ describe Oystercard do
   subject = Oystercard.new
 
   it 'should initialize with a balance of 0' do
-    # balance = 0
-    # oystercard = Oystercard.new
-    expect(Oystercard.new.balance).to eq(0)
+    expect(subject.balance).to eq(0)
   end
+
+  describe '#top_up' do 
+    it 'should add £10 to oystercard balance' do
+      expect { subject.top_up }.to change { subject.balance }.by(10)
+    end
+  end
+
 end
