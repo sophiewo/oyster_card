@@ -31,20 +31,25 @@ describe Oystercard do
   end
 
     it 'tracks status of journey' do
-      expect { subject.touch_in }.to change { subject.in_journey? }
+      subject.top_up(10)
+      expect { subject.touch_in }.to change { subject.in_journey }.from(false).to(true)
     end
 
   describe "touch_in" do
     it 'changes journey_status to true' do
-      journey_status = true
-      expect(subject.touch_in).to be_truthy
+      subject.top_up(10)
+      expect(subject.touch_in).to eq true
     end
+
+    it 'raises error if card balance is less than £1' do
+      expect { subject.touch_in}.to raise_error "Not enough money"
+    end
+
   end
 
    describe "touch_out" do
     it 'changes journey_status to false' do
-      journey_status = false
-      expect(subject.touch_out).to be_falsy
+      expect(subject.touch_out).to eq false
     end
   end
 
