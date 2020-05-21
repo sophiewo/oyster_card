@@ -14,10 +14,6 @@ describe Oystercard do
     expect(subject.balance).to eq(0)
   end
 
-  it 'should initialize with an empty list of journeys' do
-    expect(subject.journeys).to eq []
-  end
-
   describe '#top_up' do
     it 'should add £10 to oystercard balance' do
       amount = 10
@@ -62,16 +58,10 @@ describe Oystercard do
       expect { subject.touch_out(victoria) }.to change { subject.balance }.from(10).to(7)
     end
 
-    it 'reset entry station on touching out' do
-      sequence
-      subject.touch_out(victoria)
-      expect(subject.entry_station).to eq nil
-    end
-
     it 'stored the full journey on touching out' do
       sequence
       subject.touch_out(victoria)
-      expect(subject.journeys).to include({entry: station, exit: victoria})
+      expect(subject.trip_history).to include({entry: station, exit: victoria})
     end
   end
 end
