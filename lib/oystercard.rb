@@ -12,20 +12,31 @@ class Oystercard
   end
 
   def top_up(amount)
-    fail "Top up amount exceeds maximum of #{MAXIMUM_BALANCE}" if balance + amount >  MAXIMUM_BALANCE
+    fail "Top up amount exceeds maximum of #{MAXIMUM_BALANCE}" if max_check(amount)
     @balance += amount
   end
 
-  def deduct
-    @balance =- @fare
-  end
-
    def touch_in
-    fail "Not enough money" if @balance < MINIMUM_BALANCE
+    fail "Not enough money" if low_check
     @in_journey = true
   end
 
   def touch_out
+    deduct
     @in_journey = false
+  end
+
+  private
+
+  def low_check
+    @balance < MINIMUM_BALANCE
+  end
+
+  def max_check(amount)
+    @balance + amount >  MAXIMUM_BALANCE
+  end
+
+  def deduct
+    @balance -= @fare
   end
 end
