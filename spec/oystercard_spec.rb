@@ -14,6 +14,10 @@ describe Oystercard do
     expect(subject.balance).to eq(0)
   end
 
+  it 'should initialize with an empty list of journeys' do
+    expect(subject.journeys).to eq []
+  end
+
   describe '#top_up' do
     it 'should add £10 to oystercard balance' do
       amount = 10
