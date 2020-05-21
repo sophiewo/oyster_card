@@ -30,4 +30,22 @@ describe Oystercard do
     end
   end
 
+    it 'tracks status of journey' do
+      expect { subject.touch_in }.to change { subject.in_journey? }
+    end
+
+  describe "touch_in" do
+    it 'changes journey_status to true' do
+      journey_status = true
+      expect(subject.touch_in).to be_truthy
+    end
+  end
+
+   describe "touch_out" do
+    it 'changes journey_status to false' do
+      journey_status = false
+      expect(subject.touch_out).to be_falsy
+    end
+  end
+
 end
