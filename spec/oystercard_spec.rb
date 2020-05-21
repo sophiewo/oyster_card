@@ -1,8 +1,14 @@
 require 'oystercard'
 
+def sequence
+  subject.top_up(10)
+  subject.touch_in(station)
+end
+
 describe Oystercard do
 
   let (:station) { double :oval }
+  let (:victoria) { double :victoria }
 
   it 'should initialize with a balance of 0' do
     expect(subject.balance).to eq(0)
@@ -26,7 +32,7 @@ describe Oystercard do
     it 'changes journey_status to true' do
       subject.top_up(10)
       subject.touch_in(station)
-    
+
       expect(subject.in_journey?).to be true
     end
 
@@ -46,14 +52,22 @@ describe Oystercard do
   end
 
    describe "touch_out" do
-    xit 'changes journey_status to false' do
-      expect(subject.touch_out).to eq false
-    end
 
     it 'reduces the balance by the minimum balance in touch out' do
-      subject.top_up(10)
-      subject.touch_in(station)
-      expect { subject.touch_out }.to change { subject.balance }.from(10).to(7)
+      sequence
+      expect { subject.touch_out(victoria) }.to change { subject.balance }.from(10).to(7)
+    end
+
+    it 'reset entry station on touching out' do
+      sequence
+      subject.touch_out(victoria)
+      expect(subject.entry_station).to eq nil
+    end
+
+    it 'stored the full journey on touching out' do
+      sequence
+      subject.touch_out(victoria)
+      expect(subject.journeys).to include({entry: station, exit: victoria})
     end
   end
 end
