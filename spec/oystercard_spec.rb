@@ -64,4 +64,5 @@ describe Oystercard do
       expect(subject.trip_history).to include({entry: station, exit: victoria})
     end
   end
+
 end

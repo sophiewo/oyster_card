@@ -16,4 +16,12 @@ describe Journey do
     subject.touch_out(victoria)
     expect(subject.entry_station).to eq nil
   end
-end
+
+  describe '#fare' do
+    it 'should return penalty fare if entry station is nil on touch out' do
+      expect(subject.touch_out(station)).to eq Journey::PENALTY_FARE
+    end
+
+
+  end
+ end

@@ -1,6 +1,8 @@
 
 class Journey
 
+  PENALTY_FARE = 6
+
 attr_reader :journeys, :entry_station
 
   def initialize
@@ -14,7 +16,9 @@ attr_reader :journeys, :entry_station
 
   def touch_out(exit_station)
     @journeys << {entry: @entry_station, exit: exit_station}
-    @entry_station = nil
+    @entry_station = nil 
+    fare
+    
   end
 
   def in_journey?
@@ -28,4 +32,11 @@ attr_reader :journeys, :entry_station
     @journeys
   end
 
+  private
+
+  def fare
+    if @journeys[-1][:entry] == nil 
+      PENALTY_FARE
+    end
+  end
 end
